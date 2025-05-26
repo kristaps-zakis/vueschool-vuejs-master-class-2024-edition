@@ -15,8 +15,21 @@ export default defineConfigWithVueTs(
   },
 
   globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
-
+  // Override Vue plugin rules
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
+  },
+  // Apply Vue plugin configs
   pluginVue.configs['flat/essential'],
+  // Additional rule overrides that should take precedence
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off',
+      'vue/no-unused-refs': 'off',
+    },
+  },
   vueTsConfigs.recommended,
   skipFormatting,
 )
