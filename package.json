@@ -14,9 +14,10 @@
     "supabase:init": "supabase init",
     "supabase:login": "supabase login",
     "supabase:link": "supabase link --project-ref vbsurntrkpnfkabxesof",
-    "db:migrate:new": "supabase migration new projects-schema",
+    "db:migrate:new": "supabase migration new",
     "db:reset": "supabase db reset --linked",
-    "db:seed": "bun database/seed.js"
+    "db:seed": "bun database/seed.js",
+    "supabase:types": "npx supabase gen types typescript --project-id vbsurntrkpnfkabxesof --schema public > database/types.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^9.8.0",
