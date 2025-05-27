@@ -1,7 +1,7 @@
 drop table if exists projects;
 drop type if exists current_status;
 
-create type current_status as enum ('in-progress', 'compleated');
+create type current_status as enum ('in-progress', 'completed');
 
 create table
   projects (
