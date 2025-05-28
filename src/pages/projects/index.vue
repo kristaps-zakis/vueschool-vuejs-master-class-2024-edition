@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { supabase } from '@/lib/supabaseClient'
-import { ref } from 'vue'
+import { h, ref } from 'vue'
 import type { Tables } from '../../../database/types'
+import type { ColumnDef } from '@tanstack/vue-table'
+import DataTable from '@/components/ui/data-table/DataTable.vue'
 
 const projects = ref<Tables<'projects'>[] | null>(null)
 
@@ -11,6 +13,34 @@ const projects = ref<Tables<'projects'>[] | null>(null)
   if (error) console.log(error)
   projects.value = data
 })()
+
+const columns: ColumnDef<Tables<'projects'>>[] = [
+  {
+    accessorKey: 'name',
+    header: () => h('div', { class: 'text-start' }, 'Name'),
+    cell: ({ row }) => {
+      return h('div', { class: 'text-start font-medium' }, row.original.name)
+    },
+  },
+  {
+    accessorKey: 'status',
+    header: () => h('div', { class: 'text-start' }, 'Status'),
+    cell: ({ row }) => {
+      return h('div', { class: 'text-start font-medium' }, row.original.status)
+    },
+  },
+  {
+    accessorKey: 'collaborators',
+    header: () => h('div', { class: 'text-start font-medium' }, 'Collaborators'),
+    cell: ({ row }) => {
+      return h(
+        'div',
+        { class: 'text-start font-medium' },
+        JSON.stringify(row.original.collaborators),
+      )
+    },
+  },
+]
 </script>
 
 <template>
@@ -18,11 +48,7 @@ const projects = ref<Tables<'projects'>[] | null>(null)
     <h1 class="text-4xl">Projects page</h1>
     <RouterLink to="/">Go to home</RouterLink>
 
-    <ul v-if="projects">
-      <li v-for="project in projects" :key="project.id">
-        {{ project.name }}
-      </li>
-    </ul>
+    <DataTable v-if="projects" :columns="columns" :data="projects" />
   </div>
 </template>
 v
