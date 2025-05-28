@@ -4,6 +4,7 @@ import { h, ref } from 'vue'
 import type { Tables } from '../../../database/types'
 import type { ColumnDef } from '@tanstack/vue-table'
 import DataTable from '@/components/ui/data-table/DataTable.vue'
+import { RouterLink } from 'vue-router'
 
 const projects = ref<Tables<'projects'>[] | null>(null)
 
@@ -19,7 +20,14 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     accessorKey: 'name',
     header: () => h('div', { class: 'text-start' }, 'Name'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-start font-medium' }, row.original.name)
+      return h(
+        RouterLink,
+        {
+          to: `/projects/${row.original.slug}`,
+          class: 'text-start font-medium hover:bg-muted block w-full',
+        },
+        () => row.original.name,
+      )
     },
   },
   {
@@ -51,4 +59,15 @@ const columns: ColumnDef<Tables<'projects'>>[] = [
     <DataTable v-if="projects" :columns="columns" :data="projects" />
   </div>
 </template>
-v
+
+<style scoped>
+@reference "@/assets/globals.css";
+
+:deep(td) {
+  @apply p-0;
+  background-color: 'red';
+}
+:deep(td) > * {
+  @apply p-4;
+}
+</style>
