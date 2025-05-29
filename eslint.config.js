@@ -17,6 +17,7 @@ export default defineConfig([
       'vue/no-unused-refs': 'off',
     },
   },
+  { extends: ['./.eslintrc-auto-import.json'] },
   { files: ['**/*.vue'], languageOptions: { parserOptions: { parser: tseslint.parser } } },
   { files: ['**/*.css'], plugins: { css }, language: 'css/css', extends: ['css/recommended'] },
 ])
