@@ -2,6 +2,6 @@
 
 <template>
   <div>
-    <h1>Home Page</h1>
+    <h1>Sākumlapa</h1>
   </div>
 </template>
