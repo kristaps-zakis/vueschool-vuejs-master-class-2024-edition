@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import type { Tables } from '../../../database/types'
-import type { ColumnDef } from '@tanstack/vue-table'
 import DataTable from '@/components/ui/data-table/DataTable.vue'
 import { RouterLink } from 'vue-router'
 import { usePageStore } from '@/stores/store'
 import { projectsQuery } from '@/utils/supaQueries'
 import type { Projects } from '@/utils/supaQueries'
+import { projectsColumns } from '@/utils/tableColumns/projectsColumns'
 
 usePageStore().pageData.title = 'Projects'
 
@@ -19,41 +18,6 @@ const getProjects = async () => {
 }
 
 await getProjects()
-
-const columns: ColumnDef<Projects[0]>[] = [
-  {
-    accessorKey: 'name',
-    header: () => h('div', { class: 'text-start' }, 'Name'),
-    cell: ({ row }) => {
-      return h(
-        RouterLink,
-        {
-          to: `/projects/${row.original.slug}`,
-          class: 'text-start font-medium hover:bg-muted block w-full',
-        },
-        () => row.original.name,
-      )
-    },
-  },
-  {
-    accessorKey: 'status',
-    header: () => h('div', { class: 'text-start' }, 'Status'),
-    cell: ({ row }) => {
-      return h('div', { class: 'text-start font-medium' }, row.original.status)
-    },
-  },
-  {
-    accessorKey: 'collaborators',
-    header: () => h('div', { class: 'text-start font-medium' }, 'Collaborators'),
-    cell: ({ row }) => {
-      return h(
-        'div',
-        { class: 'text-start font-medium' },
-        JSON.stringify(row.original.collaborators),
-      )
-    },
-  },
-]
 </script>
 
 <template>
@@ -61,7 +25,7 @@ const columns: ColumnDef<Projects[0]>[] = [
     <h1 class="text-4xl">Projects page</h1>
     <RouterLink to="/">Go to home</RouterLink>
 
-    <DataTable v-if="projects" :columns="columns" :data="projects" />
+    <DataTable v-if="projects" :columns="projectsColumns" :data="projects" />
   </div>
 </template>
 
