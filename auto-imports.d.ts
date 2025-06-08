@@ -59,6 +59,7 @@ declare global {
   const useAttrs: typeof import('vue')['useAttrs']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
+  const useErrorStore: typeof import('./src/stores/error')['useErrorStore']
   const useId: typeof import('vue')['useId']
   const useLink: typeof import('vue-router')['useLink']
   const useModel: typeof import('vue')['useModel']
@@ -137,6 +138,7 @@ declare module 'vue' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useErrorStore: UnwrapRef<typeof import('./src/stores/error')['useErrorStore']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
     readonly usePageStore: UnwrapRef<typeof import('./src/stores/store')['usePageStore']>

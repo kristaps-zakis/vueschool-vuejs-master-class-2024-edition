@@ -69,6 +69,7 @@
     "useAttrs": true,
     "useCssModule": true,
     "useCssVars": true,
+    "useErrorStore": true,
     "useId": true,
     "useModel": true,
     "usePageStore": true,
