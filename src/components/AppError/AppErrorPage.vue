@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Button from '@/components/ui/button/Button.vue'
 import { useErrorStore } from '@/stores/error'
-import AppErrorDevSection from './AppErrorDevSection.vue'
+// import AppErrorDevSection from './AppErrorDevSection.vue'
+// import AppErrorProdSection from './AppErrorProdSection.vue'
 
 const router = useRouter()
 
@@ -34,8 +34,13 @@ if (error.value && 'code' in error.value) {
 // }
 
 const hook = router.afterEach(() => {
-  errorStore.activeError = null
+  // errorStore.activeError = null
+  errorStore.clearError()
 })
+
+const ErrorTemplate = import.meta.env.DEV
+  ? defineAsyncComponent(() => import('./AppErrorDevSection.vue'))
+  : defineAsyncComponent(() => import('./AppErrorProdSection.vue'))
 
 onBeforeUnmount(() => {
   hook()
@@ -44,7 +49,16 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="error">
-    <AppErrorDevSection :message :customCode :details :code :hint :status-code />
+    <!-- <AppErrorDevSection :message :customCode :details :code :hint :status-code /> -->
+    <ErrorTemplate
+      :message
+      :customCode
+      :details
+      :code
+      :hint
+      :status-code
+      :isCustomError="errorStore.isCustomError"
+    />
   </section>
 </template>
 
