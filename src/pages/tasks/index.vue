@@ -12,20 +12,20 @@ usePageStore().pageData.title = 'Tasks'
 const tasks = ref<TasksWithProjects | null>(null)
 
 const getTasks = async () => {
-  const { data, error } = await tasksWithProjectsQuery
+  const { data, error, status } = await tasksWithProjectsQuery
 
   if (error) {
-    console.log(error)
-    return
+    useErrorStore().setError({ error, customCode: status })
   }
 
   tasks.value = data
 }
 
 await getTasks()
+// hello
+// useErrorStore().setError({ error: Error('I am an interesting error'), customCode: 500 })
 </script>
 
 <template>
   <DataTable v-if="tasks" :columns="tasksColumns" :data="tasks" />
 </template>
-v
