@@ -8,7 +8,7 @@ import CardTitle from '@/components/ui/card/CardTitle.vue'
 import Input from '@/components/ui/input/Input.vue'
 import Label from '@/components/ui/label/Label.vue'
 import Separator from '@/components/ui/separator/Separator.vue'
-import { supabase } from '@/lib/supabaseClient'
+import { login } from '@/utils/supaAuth'
 import { RouterLink } from 'vue-router'
 
 const formData = ref({
@@ -19,17 +19,11 @@ const formData = ref({
 const router = useRouter()
 
 const signin = async () => {
-  const { error } = await supabase.auth.signInWithPassword({
-    email: formData.value.email,
-    password: formData.value.password,
-  })
+  const loginSuccess = await login(formData.value)
 
-  if (error) {
-    console.error(error)
-    return
+  if (loginSuccess) {
+    router.push('/')
   }
-
-  router.push('/')
 }
 </script>
 

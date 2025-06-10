@@ -8,7 +8,7 @@ import CardTitle from '@/components/ui/card/CardTitle.vue'
 import Input from '@/components/ui/input/Input.vue'
 import Label from '@/components/ui/label/Label.vue'
 import Separator from '@/components/ui/separator/Separator.vue'
-import { supabase } from '@/lib/supabaseClient'
+import { register } from '@/utils/supaAuth'
 import { RouterLink } from 'vue-router'
 
 const formData = ref({
@@ -23,31 +23,9 @@ const formData = ref({
 const router = useRouter()
 
 const signup = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email: formData.value.email,
-    password: formData.value.password,
-  })
+  const isRegister = await register(formData.value)
 
-  if (error) {
-    console.error(error)
-    return
-  }
-
-  console.log(data)
-
-  if (data.user) {
-    const { error } = await supabase.from('profiles').insert({
-      id: data.user.id,
-      username: formData.value.username,
-      full_name: `${formData.value.firstName} ${formData.value.lastName}`,
-    })
-  }
-
-  if (error) {
-    console.error('Profiles err: ', error)
-  }
-
-  router.push('/')
+  if (isRegister) router.push('/login')
 }
 </script>
 

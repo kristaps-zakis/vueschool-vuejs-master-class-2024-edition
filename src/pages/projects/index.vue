@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DataTable from '@/components/ui/data-table/DataTable.vue'
 import { RouterLink } from 'vue-router'
-import { usePageStore } from '@/stores/store'
+import { usePageStore } from '@/stores/pages'
 import { projectsQuery } from '@/utils/supaQueries'
 import type { Projects } from '@/utils/supaQueries'
 import { projectsColumns } from '@/utils/tableColumns/projectsColumns'
