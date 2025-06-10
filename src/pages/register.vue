@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Button from '@/components/ui/button/Button.vue'
+import Card from '@/components/ui/card/Card.vue'
 import CardContent from '@/components/ui/card/CardContent.vue'
 import CardDescription from '@/components/ui/card/CardDescription.vue'
 import CardHeader from '@/components/ui/card/CardHeader.vue'
@@ -7,6 +8,7 @@ import CardTitle from '@/components/ui/card/CardTitle.vue'
 import Input from '@/components/ui/input/Input.vue'
 import Label from '@/components/ui/label/Label.vue'
 import Separator from '@/components/ui/separator/Separator.vue'
+import { supabase } from '@/lib/supabaseClient'
 import { RouterLink } from 'vue-router'
 
 const formData = ref({
@@ -17,6 +19,36 @@ const formData = ref({
   password: '',
   confirmPassword: '',
 })
+
+const router = useRouter()
+
+const signup = async () => {
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.value.email,
+    password: formData.value.password,
+  })
+
+  if (error) {
+    console.error(error)
+    return
+  }
+
+  console.log(data)
+
+  if (data.user) {
+    const { error } = await supabase.from('profiles').insert({
+      id: data.user.id,
+      username: formData.value.username,
+      full_name: `${formData.value.firstName} ${formData.value.lastName}`,
+    })
+  }
+
+  if (error) {
+    console.error('Profiles err: ', error)
+  }
+
+  router.push('/')
+}
 </script>
 
 <template>
@@ -33,7 +65,7 @@ const formData = ref({
           <Button variant="outline" class="w-full"> Register with Google </Button>
           <Separator label="Or" />
         </div>
-        <form class="grid gap-4">
+        <form class="grid gap-4" @submit.prevent="signup">
           <div class="grid gap-2">
             <Label id="username" class="text-left">Username</Label>
             <Input
