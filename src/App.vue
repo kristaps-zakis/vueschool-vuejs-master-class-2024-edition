@@ -2,13 +2,24 @@
 import AuthLayout from '@/components/Layout/main/AuthLayout.vue'
 import { useErrorStore } from '@/stores/error'
 import AppErrorPage from './components/AppError/AppErrorPage.vue'
+import { supabase } from './lib/supabaseClient'
+import { useAuthStore } from './stores/auth'
 // import { error } from 'console'
 
 const errorStore = useErrorStore()
+const authStore = useAuthStore()
 const { activeError } = storeToRefs(errorStore)
 
 onErrorCaptured((error) => {
   errorStore.setError({ error })
+})
+
+onMounted(async () => {
+  const { data, error } = await supabase.auth.getSession()
+
+  if (data.session?.user) {
+    await authStore.setAuth(data.session)
+  }
 })
 </script>
 
