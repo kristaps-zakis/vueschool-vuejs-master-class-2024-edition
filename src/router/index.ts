@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/stores/auth'
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { routes } from 'vue-router/auto-routes'
 // import HomeView from '@/views/HomeView.vue'
@@ -29,6 +30,11 @@ const router = createRouter({
   //     component: h('h2', { style: 'color: red;' }, 'Page not found'),
   //   },
   // ],
+})
+
+router.beforeEach(async () => {
+  const { getSession } = useAuthStore()
+  await getSession()
 })
 
 export default router
