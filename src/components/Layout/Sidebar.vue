@@ -37,6 +37,11 @@ const accountLinks = [
     title: 'Sign out',
   },
 ]
+const executeAction = (linkTitle: string) => {
+  if (linkTitle === 'Sign out') {
+    console.log('sign out')
+  }
+}
 </script>
 <template>
   <aside
@@ -57,7 +62,7 @@ const accountLinks = [
         <SidebarLinks :links="links" />
       </div>
       <div class="border-y text-center bg-background py-3">
-        <SidebarLinks :links="accountLinks" />
+        <SidebarLinks :links="accountLinks" @actionClicked="executeAction" />
       </div>
     </nav>
   </aside>
