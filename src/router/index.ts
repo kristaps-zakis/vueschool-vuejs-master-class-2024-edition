@@ -32,14 +32,24 @@ const router = createRouter({
   // ],
 })
 
-router.beforeEach((to, from) => {
-  const { user } = storeToRefs(useAuthStore())
+router.beforeEach(async (to, from) => {
+  const authStore = useAuthStore()
+  // const { user } = storeToRefs(useAuthStore())
+  await authStore.getSession()
 
-  if (!user.value && !['/login', '/register'].includes(to.path)) {
+  const authPages = ['/login', '/register'].includes(to.path)
+
+  if (!authStore.user && !authPages) {
     return {
       name: '/login',
       // query: { redirect: to.fullPath },s
       // path: '/login',
+    }
+  }
+
+  if (authStore.user && authPages) {
+    return {
+      name: '/',
     }
   }
 
