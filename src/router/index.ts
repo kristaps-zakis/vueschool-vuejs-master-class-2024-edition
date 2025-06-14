@@ -32,9 +32,19 @@ const router = createRouter({
   // ],
 })
 
-// router.beforeEach(async () => {
-//   const { getSession } = useAuthStore()
-//   await getSession()
-// })
+router.beforeEach((to, from) => {
+  const { user } = storeToRefs(useAuthStore())
+
+  if (!user.value && !['/login', '/register'].includes(to.path)) {
+    return {
+      name: '/login',
+      // query: { redirect: to.fullPath },s
+      // path: '/login',
+    }
+  }
+
+  // const { getSession } = useAuthStore()
+  // await getSession()
+})
 
 export default router
