@@ -6,6 +6,7 @@ import type { Tables } from 'database/types'
 export const useAuthStore = defineStore('auth-store', () => {
   const user = ref<null | User>(null)
   const profile = ref<null | Tables<'profiles'>>(null)
+  const isTrackingAuthChange = ref(false)
 
   const setProfile = async () => {
     if (!user.value) {
@@ -43,11 +44,34 @@ export const useAuthStore = defineStore('auth-store', () => {
     }
   }
 
+  const trackAuthChanges = () => {
+    // supabase.auth.onAuthStateChange((event, session) => {
+    //   if (event === 'SIGNED_OUT') {
+    //     setAuth(null)
+    //   }
+
+    //   if (event === 'SIGNED_IN') {
+    //     setAuth(session)
+    //   }
+    // })
+
+    if (isTrackingAuthChange.value) return
+
+    isTrackingAuthChange.value = true
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      setTimeout(async () => {
+        await setAuth(session)
+      }, 0)
+    })
+  }
+
   return {
     user,
     profile,
     setAuth,
     getSession,
+    trackAuthChanges,
   }
 })
 
