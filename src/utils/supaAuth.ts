@@ -38,13 +38,8 @@ export const login = async (formData: LoginForm) => {
     password: formData.password,
   })
 
-  if (error) {
-    console.error(error)
-    return
-  }
-
-  // await authStore.setAuth(data.session)
-  return true
+  // console.error(error)
+  return { error }
 }
 
 export const logout = async () => {
