@@ -8,13 +8,14 @@ import TableCell from '@/components/ui/table/TableCell.vue'
 import TableHead from '@/components/ui/table/TableHead.vue'
 import TableHeader from '@/components/ui/table/TableHeader.vue'
 import TableRow from '@/components/ui/table/TableRow.vue'
-import { singleProjectQuery } from '@/utils/supaQueries'
 import { RouterLink } from 'vue-router'
-import type { SingleProject } from '@/utils/supaQueries'
+import { useProjectStore } from '@/stores/loaders/projects'
 
-const route = useRoute('/projects/[slug]')
+const { slug } = useRoute('/projects/[slug]').params
 
-const project = ref<SingleProject | null>(null)
+const projectLoader = useProjectStore()
+const { project } = storeToRefs(projectLoader)
+const { getProject } = projectLoader
 
 watch(
   () => project.value?.name,
@@ -24,13 +25,7 @@ watch(
   },
 )
 
-const getProject = async () => {
-  const { data, error, status } = await singleProjectQuery(route.params.slug)
-
-  if (error) useErrorStore().setError({ error, customCode: status })
-  project.value = data
-}
-await getProject()
+await getProject(slug)
 </script>
 
 <template>

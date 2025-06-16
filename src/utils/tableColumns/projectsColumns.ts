@@ -44,7 +44,7 @@ export const projectsColumns = (collabs: Ref<GroupedCollabs>): ColumnDef<Project
                   to: `/users/${collab.username}`,
                 },
                 () => {
-                  return h(Avatar, { class: 'hover:scale-110 transition-transform' }, () =>
+                  return h(Avatar, { class: 'flex hover:scale-110 transition-transform' }, () =>
                     h(AvatarImage, { src: collab.avatar_url || '' }),
                   )
                 },
