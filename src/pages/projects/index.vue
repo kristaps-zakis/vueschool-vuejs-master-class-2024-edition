@@ -1,30 +1,20 @@
 <script setup lang="ts">
 import DataTable from '@/components/ui/data-table/DataTable.vue'
-import { RouterLink } from 'vue-router'
 import { usePageStore } from '@/stores/pages'
-import { projectsQuery } from '@/utils/supaQueries'
-import type { Projects } from '@/utils/supaQueries'
 import { projectsColumns } from '@/utils/tableColumns/projectsColumns'
+import { useProjectStore } from '@/stores/loaders/projects'
 
 usePageStore().pageData.title = 'Projects'
 
-const projects = ref<Projects | null>(null)
-
-const getProjects = async () => {
-  const { data, error, status } = await projectsQuery
-
-  if (error) useErrorStore().setError({ error, customCode: status })
-  projects.value = data
-}
+const projectsLoader = useProjectStore()
+const { projects } = storeToRefs(projectsLoader)
+const { getProjects } = projectsLoader
 
 await getProjects()
 </script>
 
 <template>
   <div>
-    <h1 class="text-4xl">Projects page</h1>
-    <RouterLink to="/">Go to home</RouterLink>
-
     <DataTable v-if="projects" :columns="projectsColumns" :data="projects" />
   </div>
 </template>
