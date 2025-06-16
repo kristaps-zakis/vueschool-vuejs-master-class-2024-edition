@@ -36,15 +36,26 @@ export const projectsColumns = (collabs: Ref<GroupedCollabs>): ColumnDef<Project
       return h(
         'div',
         { class: 'text-start font-medium' },
-        collabs.value[row.original.id].map((collab) => {
-          return h(Avatar, () => h(AvatarImage, { src: collab.avatar_url || '' }))
-        }),
+        collabs.value[row.original.id]
+          ? collabs.value[row.original.id].map((collab) => {
+              return h(
+                RouterLink,
+                {
+                  to: `/users/${collab.username}`,
+                },
+                () => {
+                  return h(Avatar, { class: 'hover:scale-110 transition-transform' }, () =>
+                    h(AvatarImage, { src: collab.avatar_url || '' }),
+                  )
+                },
+              )
+              //
+            })
+          : row.original.collaborators.map(() => {
+              return h(Avatar, { class: 'animate-pulse' }, () => h(AvatarFallback))
+            }),
       )
     },
   },
 ]
-
-// <Avatar>
-//           <AvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
-//           <AvatarFallback>CN</AvatarFallback>
-//         </Avatar>
+//  return h(Avatar, () => h(AvatarFallback, { class: 'bg-muted' }, ''))
