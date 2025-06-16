@@ -32,7 +32,7 @@ const router = createRouter({
   // ],
 })
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to, _) => {
   const authStore = useAuthStore()
   // const { user } = storeToRefs(useAuthStore())
   await authStore.getSession()

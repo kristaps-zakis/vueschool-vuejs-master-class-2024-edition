@@ -84,7 +84,9 @@ const signin = async () => {
               :class="{ 'border-red-500': serverError }"
             />
             <ul v-if="realTimeErrors?.password.length" class="text-sm text-left text-red-500">
-              <li v-for="error in realTimeErrors.password" class="list-disc">{{ error }}</li>
+              <li v-for="error in realTimeErrors.password" :key="error" class="list-disc">
+                {{ error }}
+              </li>
             </ul>
           </div>
           <ul v-if="serverError" class="text-sm text-left text-red-500">

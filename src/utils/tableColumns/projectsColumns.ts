@@ -1,8 +1,13 @@
 import type { ColumnDef } from '@tanstack/vue-table'
 import type { Projects } from '../supaQueries'
 import { RouterLink } from 'vue-router'
+import type { Ref } from 'vue'
+import type { GroupedCollabs } from '@/types/GroupedCollabs'
+import Avatar from '@/components/ui/avatar/Avatar.vue'
+import AvatarFallback from '@/components/ui/avatar/AvatarFallback.vue'
+import AvatarImage from '@/components/ui/avatar/AvatarImage.vue'
 
-export const projectsColumns: ColumnDef<Projects[0]>[] = [
+export const projectsColumns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] => [
   {
     accessorKey: 'name',
     header: () => h('div', { class: 'text-start' }, 'Name'),
@@ -31,8 +36,15 @@ export const projectsColumns: ColumnDef<Projects[0]>[] = [
       return h(
         'div',
         { class: 'text-start font-medium' },
-        JSON.stringify(row.original.collaborators),
+        collabs.value[row.original.id].map((collab) => {
+          return h(Avatar, () => h(AvatarImage, { src: collab.avatar_url || '' }))
+        }),
       )
     },
   },
 ]
+
+// <Avatar>
+//           <AvatarImage src="https://github.com/radix-vue.png" alt="@radix-vue" />
+//           <AvatarFallback>CN</AvatarFallback>
+//         </Avatar>

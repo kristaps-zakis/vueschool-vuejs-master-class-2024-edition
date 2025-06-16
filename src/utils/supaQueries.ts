@@ -52,3 +52,8 @@ export type SingleTask = QueryData<ReturnType<typeof singleTaskQuery>>
 export const profileQuery = ({ column, value }: { column: string; value: string }) =>
   supabase.from('profiles').select().eq(column, value).single()
 // export type Profile = QueryData<ReturnType<typeof profileQuery>>
+
+export const groupedProfileQueries = (userIds: string[]) =>
+  supabase.from('profiles').select('username, avatar_url, id, full_name').in('id', userIds)
+
+export type Collabs = QueryData<ReturnType<typeof groupedProfileQueries>>
