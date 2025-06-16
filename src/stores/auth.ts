@@ -45,6 +45,10 @@ export const useAuthStore = defineStore('auth-store', () => {
     if (data.session?.user) {
       await setAuth(data.session)
     }
+
+    if (error) {
+      console.error(error)
+    }
   }
 
   const trackAuthChanges = () => {

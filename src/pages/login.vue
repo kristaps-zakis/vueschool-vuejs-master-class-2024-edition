@@ -65,7 +65,9 @@ const signin = async () => {
               :class="{ 'border-red-500': serverError }"
             />
             <ul v-if="realTimeErrors?.email.length" class="text-sm text-left text-red-500">
-              <li v-for="error in realTimeErrors.email" class="list-disc">{{ error }}</li>
+              <li v-for="error in realTimeErrors.email" :key="error" class="list-disc">
+                {{ error }}
+              </li>
             </ul>
           </div>
           <div class="grid gap-2">

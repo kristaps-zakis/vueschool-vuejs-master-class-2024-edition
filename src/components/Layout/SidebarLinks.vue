@@ -17,7 +17,7 @@ const emitActionClicked = (linkTitle: string) => {
   emits('actionClicked', linkTitle)
 }
 
-const filtredLinks = props.links.filter((link): link is LinkProp & { to: string } => !!link.to)
+// const filtredLinks = props.links.filter((link): link is LinkProp & { to: string } => !!link.to)
 </script>
 
 <template>

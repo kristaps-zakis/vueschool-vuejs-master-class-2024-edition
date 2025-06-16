@@ -3,8 +3,6 @@ import AuthLayout from '@/components/Layout/main/AuthLayout.vue'
 import { useErrorStore } from '@/stores/error'
 import AppErrorPage from './components/AppError/AppErrorPage.vue'
 import { useAuthStore } from './stores/auth'
-import { supabase } from './lib/supabaseClient'
-// import { error } from 'console'
 
 const errorStore = useErrorStore()
 const { activeError } = storeToRefs(errorStore)
