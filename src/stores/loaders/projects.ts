@@ -7,11 +7,26 @@ export const useProjectStore = defineStore('projcets-store', () => {
 
   const loadProjects = useMemoize(async (key: string) => await projectsQuery)
 
+  const validateCache = () => {
+    if (projects.value?.length) {
+      projectsQuery.then(({ data }) => {
+        if (JSON.stringify(projects.value) === JSON.stringify(data)) {
+          console.log('Čached and fresh data matched!')
+        } else {
+          console.log('šomething has changed')
+          loadProjects.delete('projects')
+        }
+      })
+    }
+  }
+
   const getProjects = async () => {
     const { data, error, status } = await loadProjects('projects')
 
     if (error) useErrorStore().setError({ error, customCode: status })
     projects.value = data
+
+    validateCache()
   }
 
   return {
