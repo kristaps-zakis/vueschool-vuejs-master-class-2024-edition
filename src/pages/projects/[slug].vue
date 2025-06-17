@@ -10,6 +10,7 @@ import TableHeader from '@/components/ui/table/TableHeader.vue'
 import TableRow from '@/components/ui/table/TableRow.vue'
 import { RouterLink } from 'vue-router'
 import { useProjectStore } from '@/stores/loaders/projects'
+import AppInPlaceEditText from '@/components/AppInPlaceEdit/AppInPlaceEditText.vue'
 
 const { slug } = useRoute('/projects/[slug]').params
 
@@ -31,8 +32,8 @@ await getProject(slug)
 <template>
   <Table v-if="project">
     <TableRow>
-      <TableHead> {{ project.name }} </TableHead>
-      <TableCell> Lorem ipsum dolor sit amet. </TableCell>
+      <TableHead> Name </TableHead>
+      <TableCell><AppInPlaceEditText v-model="project.name" /> </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
