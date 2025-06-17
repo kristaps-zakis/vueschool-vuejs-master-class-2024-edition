@@ -6,6 +6,7 @@ import type { GroupedCollabs } from '@/types/GroupedCollabs'
 import Avatar from '@/components/ui/avatar/Avatar.vue'
 import AvatarFallback from '@/components/ui/avatar/AvatarFallback.vue'
 import AvatarImage from '@/components/ui/avatar/AvatarImage.vue'
+import AppInPlaceEditStatus from '@/components/AppInPlaceEdit/AppInPlaceEditStatus.vue'
 
 export const projectsColumns = (collabs: Ref<GroupedCollabs>): ColumnDef<Projects[0]>[] => [
   {
@@ -26,7 +27,11 @@ export const projectsColumns = (collabs: Ref<GroupedCollabs>): ColumnDef<Project
     accessorKey: 'status',
     header: () => h('div', { class: 'text-start' }, 'Status'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-start font-medium' }, row.original.status)
+      return h(
+        'div',
+        { class: 'text-start font-medium' },
+        h(AppInPlaceEditStatus, { modelValue: row.original.status, readonly: true }),
+      )
     },
   },
   {

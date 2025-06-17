@@ -11,6 +11,7 @@ import TableRow from '@/components/ui/table/TableRow.vue'
 import { RouterLink } from 'vue-router'
 import { useProjectStore } from '@/stores/loaders/projects'
 import AppInPlaceEditText from '@/components/AppInPlaceEdit/AppInPlaceEditText.vue'
+import AppInPlaceEditStatus from '@/components/AppInPlaceEdit/AppInPlaceEditStatus.vue'
 
 const { slug } = useRoute('/projects/[slug]').params
 
@@ -38,12 +39,14 @@ await getProject(slug)
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        {{ project.description || 'No description' }}
+        <AppInPlaceEditText v-model="project.description" @commit="updateProject" />
       </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
-      <TableCell>{{ project.status }}</TableCell>
+      <TableCell
+        ><AppInPlaceEditStatus v-model="project.status" @commit="updateProject"
+      /></TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Collaborators </TableHead>
