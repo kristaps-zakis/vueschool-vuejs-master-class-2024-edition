@@ -25,6 +25,5 @@ const emmitCommit = () => {
     class="w-full p-1 bg-transparent focus:outline-none focus:border-none focus:bg-gray-800 focus:rounded-md"
     v-model="inputValue"
     @blur="emmitCommit"
-    @keyup.enter="($event.target as HTMLInputElement).blur()"
   ></textarea>
 </template>
