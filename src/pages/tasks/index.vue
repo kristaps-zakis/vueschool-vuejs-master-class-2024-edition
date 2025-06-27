@@ -22,7 +22,6 @@ const getTasks = async () => {
 }
 
 await getTasks()
-// hello
 // useErrorStore().setError({ error: Error('I am an interesting error'), customCode: 500 })
 </script>
 
